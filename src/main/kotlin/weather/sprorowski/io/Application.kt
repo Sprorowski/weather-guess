@@ -4,7 +4,6 @@ import weather.sprorowski.io.config.commonModule
 import weather.sprorowski.io.config.hr.hrModule
 import weather.sprorowski.io.config.plugins.configureApplication
 import weather.sprorowski.io.config.plugins.configureContainer
-import weather.sprorowski.io.config.user.userModule
 import weather.sprorowski.io.plugins.configureHttp
 import weather.sprorowski.io.presenter.plugins.configureExceptionHandler
 import weather.sprorowski.io.presenter.plugins.configureLogging
@@ -22,7 +21,6 @@ fun main() {
 
             val applicationModules = listOf(
                 commonModule(config),
-                userModule(config),
                 hrModule(config),
                 // module
             )

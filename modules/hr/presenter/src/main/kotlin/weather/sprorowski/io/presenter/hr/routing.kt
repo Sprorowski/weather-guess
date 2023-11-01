@@ -26,37 +26,11 @@ fun Route.hrRoutes() {
     val getStipends: ListStipendsQueryHandler by inject()
     val getStipend: GetStipendQueryHandler by inject()
 
-    route("/hr") {
-        route("/employees") {
-            route("/stipends") {
-                get {
-                    val query = ListStipendsQuery(call.request.queryParameters["page"]?.toInt() ?: 1)
-                    val stipends = getStipends.handle(query)
-
-                    call.respond(HttpStatusCode.OK, stipends)
-                }
-
-                route("/{stipendId}") {
-                    get {
-                        val query = GetStipendQuery(Stipend.Id(call.parameters["stipendId"] ?: ""))
-                        val stipend = getStipend.handle(query)
-
-                        call.respond(HttpStatusCode.OK, stipend)
-                    }
-                    post("/documents") {
-                        val command = AttachExpenseDocumentCommand(call.uploadFile("file"), Stipend.Id(call.parameters["stipendId"] ?: ""))
-                        createDocument.handle(command)
-                        call.respond(HttpStatusCode.OK)
-                    }
-                }
-
-                post {
-                    val command = call.receive<CreateStipendCommand>()
-                    creator.handle(command)
-
-                    call.respond(status = HttpStatusCode.Created, "")
-                }
-            }
+    route("/game") {
+        get {
+            call.respond(HttpStatusCode.OK, "hello")
         }
     }
+
+
 }

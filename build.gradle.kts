@@ -16,7 +16,7 @@ dependencies {
     implementation(project(":modules:common:presenter"))
 
     implementation(project(":modules:common:config"))
-    implementation(project(":modules:hr:config"))
+    implementation(project(":modules:game:config"))
     // new-module-placeholder
 
     // external

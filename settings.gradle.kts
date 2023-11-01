@@ -1,6 +1,6 @@
 rootProject.name = "weather.sprorowski.io"
 
-val modules = listOf("common", "user", "hr")
+val modules = listOf("common", "game")
 
 modules.forEach {
     include(

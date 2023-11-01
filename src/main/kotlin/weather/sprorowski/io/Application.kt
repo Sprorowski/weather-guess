@@ -1,7 +1,7 @@
 package weather.sprorowski.io
 
 import weather.sprorowski.io.config.commonModule
-import weather.sprorowski.io.config.hr.hrModule
+import weather.sprorowski.io.config.game.gameModule
 import weather.sprorowski.io.config.plugins.configureApplication
 import weather.sprorowski.io.config.plugins.configureContainer
 import weather.sprorowski.io.plugins.configureHttp
@@ -21,7 +21,7 @@ fun main() {
 
             val applicationModules = listOf(
                 commonModule(config),
-                hrModule(config),
+                gameModule(config),
                 // module
             )
 

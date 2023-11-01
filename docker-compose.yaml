@@ -1,0 +1,71 @@
+version: '3'
+networks:
+  dev_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: default
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.database/var:/var/lib/mysql
+    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci' ]
+    networks:
+      dev_net:
+
+#  app:
+#    build:
+#      context: .
+#      dockerfile: presenter/api/Dockerfile
+#    image: backoffice
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - "datadog"
+#      - "db"
+#    environment:
+#      - DATABASE_JDBC_RO_URL=jdbc:postgresql://db:5432/backoffice
+#      - DATABASE_JDBC_RW_URL=jdbc:postgresql://db:5432/backoffice
+#      - DATABASE_USERNAME=postgres
+#      - DATABASE_PASSWORD=postgres
+#
+#      - DD_API_KEY=${DD_API_KEY}
+#      - DD_SERVICE=${DD_SERVICE}
+#      - DD_ENV=dev
+#      - DD_VERSION=0.1.0
+#      - DD_AGENT_HOST=datadog
+#
+#      - DD_APM_ENABLED=true
+#      - DD_APM_NON_LOCAL_TRAFFIC=true
+#      - DD_TRACE_SAMPLE_RATE=1
+#      - DD_PROFILING_ENABLED=true
+#      - DD_PROFILING_ALLOCATION_ENABLED=true
+#      - DD_LOGS_ENABLED=true
+#      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+#      - DD_LOGS_INJECTION=true
+#      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+#      - DD_JMXFETCH_ENABLED=true
+#      - DD_INTEGRATION_NETTY_ENABLED=true
+#
+#      - JAVA_OPTS=-javaagent:dd-java-agent.jar
+#      - API_OPTS=-XX:FlightRecorderOptions=stackdepth=256
+#
+#  datadog:
+#    image: public.ecr.aws/datadog/agent
+#    restart: always
+#    ports:
+#      - "8125:8125/udp"
+#      - "8126:8126/tcp"
+#    environment:
+#      - DD_SITE=datadoghq.com
+#      - DD_API_KEY=${DD_API_KEY}
+#      - DD_ENV=staging
+#      - DD_APM_ENABLED=true

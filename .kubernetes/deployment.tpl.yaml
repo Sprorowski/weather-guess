@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: $CI_PROJECT_PATH_SLUG
+  name: $CI_PROJECT_PATH_SLUG
+  labels:
+    app: $CI_PROJECT_PATH_SLUG
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $CI_PROJECT_PATH_SLUG
+  template:
+    metadata:
+      labels:
+        app: $CI_PROJECT_PATH_SLUG
+        admission.datadoghq.com/enabled: "true"
+    spec:
+      containers:
+        - name: $CI_PROJECT_PATH_SLUG
+          image: $AWS_ECR_DEFAULT_REGISTRY/$CI_PROJECT_PATH_SLUG:$CI_COMMIT_SHA
+          imagePullPolicy: "Always"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_JDBC_RW_URL
+              value: "${DATABASE_JDBC_RW_URL}"
+            - name: DATABASE_JDBC_RO_URL
+              value: "${DATABASE_JDBC_RO_URL}"
+            - name: DATABASE_USERNAME
+              value: "${DATABASE_USERNAME}"
+            - name: DATABASE_PASSWORD
+              value: "${DATABASE_PASSWORD}"
+            - name: DD_API_KEY
+              value: "${DD_API_KEY}"
+            - name: DD_SERVICE
+              value: "${DD_SERVICE}"
+            - name: DD_ENV
+              value: "${DD_ENV}"
+            - name: DD_APM_ENABLED
+              value: "${DD_APM_ENABLED}"
+            - name: DD_APM_NON_LOCAL_TRAFFIC
+              value: "${DD_APM_NON_LOCAL_TRAFFIC}"
+            - name: DD_TRACE_SAMPLE_RATE
+              value: "${DD_TRACE_SAMPLE_RATE}"
+            - name: DD_PROFILING_ENABLED
+              value: "${DD_PROFILING_ENABLED}"
+            - name: DD_PROFILING_ALLOCATION_ENABLED
+              value: "${DD_PROFILING_ALLOCATION_ENABLED}"
+            - name: DD_LOGS_ENABLED
+              value: "${DD_LOGS_ENABLED}"
+            - name: DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL
+              value: "${DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL}"
+            - name: DD_LOGS_INJECTION
+              value: "${DD_LOGS_INJECTION}"
+            - name: DD_TRACE_OKHTTP_ENABLED
+              value: "${DD_TRACE_OKHTTP_ENABLED}"
+            - name: DD_DOGSTATSD_NON_LOCAL_TRAFFIC
+              value: "${DD_DOGSTATSD_NON_LOCAL_TRAFFIC}"
+            - name: DD_JMXFETCH_ENABLED
+              value: "${DD_JMXFETCH_ENABLED}"
+            - name: DD_INTEGRATION_NETTY_ENABLED
+              value: "${DD_INTEGRATION_NETTY_ENABLED}"
+            - name: JAVA_OPTS
+              value: "${JAVA_OPTS}"
+            - name: API_OPTS
+              value: "${API_OPTS}"
